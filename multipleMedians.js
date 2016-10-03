@@ -1,4 +1,4 @@
-var Heap = require('./heap.js'); //Require our implementation of Heaps!
+var Heap = require('./heap.js'); //Require our heaps implementation!
 
 function fillHeaps(list){
 	maxHeap = new Heap(Heap.TYPE_MAX);
