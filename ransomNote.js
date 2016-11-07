@@ -1,3 +1,6 @@
+var chai = require('chai');
+var expect = chai.expect; 
+
 function factible(magazine, ransom){
 	if(!magazine instanceof Array || !ransom instanceof Array)
 		return 'No';
@@ -24,4 +27,19 @@ function factible(magazine, ransom){
 	return 'Yes';
 }
 
-console.log(factible(['a','b','c'],['b','c','d']));
+//console.log(factible(['a','b','c'],['b','c','d']));
+
+describe('TC_01_Ransom_Note_Factible_Empty', function() {
+  it('factible([],[]) should return true "Yes".',function(){
+    //var cartSummary = new CartSummary([]);
+    expect(factible([],[])).to.equal('Yes');
+  });
+});
+
+
+describe('RansomNoteFactible', function() {
+  it("factible(['a','b','c'],['b','c','d']) should return true 'Yes'.",function(){
+    //var cartSummary = new CartSummary([]);
+    expect(factible(['a','b','c'],['b','c','d'])).to.equal('No');
+  });
+});

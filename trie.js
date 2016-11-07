@@ -2,7 +2,7 @@ Node =  function(key){
 	this.key = key;
 	this.value = 0;
 	this.complete = false;
-	this.children = [];
+	this.children = {};
 }
 
 Trie = function(){
@@ -53,9 +53,10 @@ Trie.prototype = {
 
 
 var trie = new Trie();
-trie.add('cam');
-trie.add('camera');
-trie.add('cameration');
+trie.add('ca');
+//trie.add('camera');
+//trie.add('cameration');
 
-trie.search('');
+trie.search('c');
+console.log(trie);
 
