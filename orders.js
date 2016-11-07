@@ -10,12 +10,12 @@ a b c
 
 function orders(list){
 	ords = [];
-	suf = [];
+	sufs = [];
 	win = 2;
-	console.log(getInitialSuffix(list));
-	console.log(getInitialPrefix(list));
+	var s = getInitialSuffix(list);
+	var p = getInitialPrefix(list);
+	var player = ;
 	return;
-
 }
 
 function getInitialSuffix(list){
