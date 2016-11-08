@@ -9,12 +9,20 @@ a b c
 */
 
 function orders(list){
-	ords = [];
-	sufs = [];
-	win = 2;
-	var s = getInitialSuffix(list);
 	var p = getInitialPrefix(list);
-	var player = ;
+	var c = getInitialSuffix(list);
+	plen = p.length;
+	for(var i = 0; i < plen; i++){
+		var player = p.pop();
+		temp = [];
+		for(var j = 0; j < c.length; j++){
+			for(var k=0 ; k<= c[j].length; k++){
+				temp.push(addSuffix(c[j], player, k));
+			}	
+		}
+		c = temp;
+	}
+	console.log('Ordenes',  c.length);
 	return;
 }
 
@@ -24,8 +32,17 @@ function getInitialSuffix(list){
 	sufix.push([sufix[0][1], sufix[0][0]]);
 	return sufix;
 }
+
 function getInitialPrefix(list){
-	return list.slice(0, list.length-3);
+	return list.slice(0, list.length-2);
 }
 
-orders(['a','b','c']);
+function addSuffix(suf, player, position){
+	var word = [];
+	word = word.concat(suf.slice(0,position));
+	word = word.concat(player);
+	word = word.concat(suf.slice(position));
+	return word;
+}
+
+orders(['a','b','c','d','e','f','g','h']);
