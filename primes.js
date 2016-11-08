@@ -4,7 +4,7 @@
 */
 
 function primes(n){
-	var ts = new Date();
+	//var ts = new Date();
 	if(n < 2){
 		console.log('No primos');
 		return;
@@ -24,9 +24,30 @@ function primes(n){
 			pa.push(i);
 		}
 	}
-	var tf = new Date();
-	console.log('Time length:', tf - ts);
-	console.log('Total primes', pa.length);
+	//var tf = new Date();
+	//console.log('Time length:', tf - ts);
+	//console.log('Total primes', pa.length);
 }
 
-primes(10000000);
+
+
+
+
+function isPrime(n){
+	if(n < 2){
+		console.log('Not prime');
+		return;
+	}
+	var sqr = Math.floor(Math.sqrt(n));
+	for(var i = 2; i <= sqr; i++){	
+		if(!(n % i)){
+			console.log('Not prime')
+			return;
+		}
+	}
+	console.log('Prime')
+}
+
+
+isPrime(9);
+isPrime(13);

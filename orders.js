@@ -7,13 +7,21 @@ a b c
 5.- bca
 6.- cba 
 */
-
+/**
+* @param {Array} list
+* @return {Array} all posible combinations of list
+*
+*/
 function orders(list){
+	if(list.length <=1){
+		return list;
+	}
 	var p = getInitialPrefix(list);
 	var c = getInitialSuffix(list);
+	var payer;
 	plen = p.length;
 	for(var i = 0; i < plen; i++){
-		var player = p.pop();
+		player = p.pop();
 		temp = [];
 		for(var j = 0; j < c.length; j++){
 			for(var k=0 ; k<= c[j].length; k++){
@@ -22,9 +30,9 @@ function orders(list){
 		}
 		c = temp;
 	}
-	console.log('Ordenes',  c.length);
-	return;
+	return c;
 }
+
 
 function getInitialSuffix(list){
 	var sufix = [];
@@ -45,4 +53,5 @@ function addSuffix(suf, player, position){
 	return word;
 }
 
-orders(['a','b','c','d','e','f','g','h']);
+console.log('ordenes', orders(['a','b','c','d']));
+//orders("abcd");

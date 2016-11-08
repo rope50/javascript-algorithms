@@ -17,109 +17,120 @@ Tree.prototype = {
 		}
 	},
 	addNode : function(value){
-		var node = this.createNode(value);
+		//var node = this.createNode(value);
 		if(!this.root){
-			this.root = node;
+			this.root = this.createNode(value);
 		}
 		else{
-			this.insertNode(node);
+			this.insertNode(this.root, value);
 		}
 	},
-	insertNode: function(newNode){
-		var value = newNode.value;
-		var ins = function(n){
-			if(value > n.value){
-				if(n.right){
-					ins(n.right);
-				}else{
-					n.right = newNode;
-				}
-			}
-			else{
-				if(n.left){
-					ins(n.left);
-				}else{
-					n.left = newNode;
-				}	
+	insertNode: function(n, value){
+		if(value === n.value){
+			return;
+		}
+		else if(value > n.value){
+			if(n.right){
+				this.insertNode(n.right, value);
+			}else{
+				n.right = this.createNode(value);
 			}
 		}
-		ins(this.root);
+		else{
+			if(n.left){
+				this.insertNode(n.left, value);
+			}else{
+				n.left = this.createNode(value);
+			}	
+		}
 	},
 	fill : function(arr){
 		for(var i in arr){
 			this.addNode(arr[i]);
 		}
 	},
-	preOrder : function(){
-		var pre = function(n){			
-			if(n.left)	pre(n.left);
-			console.log('Pre:', n.value);
-			if(n.right)	pre(n.right);	
+	preOrder : function(n){
+		if(!n){
+			n = this.root;
 		}
-		pre(this.root);
-
+		if(n.left)	this.preOrder(n.left);
+		console.log('Pre:', n.value);
+		if(n.right)	this.preOrder(n.right);	
 	},
-	postOrder : function(){
-		var post = function(n){			
-			if(n.right)	post(n.right);	
-			console.log('Post:', n.value);
-			if(n.left)	post(n.left);
+	postOrder : function(n){
+		if(!n){
+			n = this.root;
 		}
-		post(this.root);
+		if(n.right)	this.postOrder(n.right);	
+		console.log('Post:', n.value);
+		if(n.left)	this.postOrder(n.left);
 	},
-	leafs : function(){
-		var leafs = function(n){
-			if(!n.left && !n.right)
-				console.log('leaf:',n.value);
-			else{
-				if(n.left)
-					leafs(n.left);
-				if(n.right)
-					leafs(n.right);	
-			}
+	leafs : function(n){
+		if(!n){
+			n = this.root;
 		}
-		leafs(this.root);
+		
+		if(!n.left && !n.right)
+			console.log('leaf:',n.value);
+		else{
+			if(n.left)
+				this.leafs(n.left);
+			if(n.right)
+				this.leafs(n.right);	
+		}
+		
+		//leafs(this.root);
 	},
-	deleteNode : function(value){
-		var node  =  this.searchNode(value);
-		if(node === null){
-			return;
+	minorDesendent : function(n){
+		if(!n){
+			n = this.root;
 		}
-		else if(!node.left && !node.right){
-			//only remove de node
+		if(n.left)
+			return this.minorDesendent(n.left);
+		else
+			return n;
+	},
+	deleteNode : function(value, n){
+		if(!n){
+			n = this.root;
 		}
-		else if(node.left && node.right){
-
+		if(n.value === value)
+			return n;
+		else if(value < n.value){
+			if(n.left)
+				return this.searchNode(n.left, value);
+			else
+				return null;
 		}
-		else if(node.left && !node.right){
-
-		}
-		else if(!node.left && node.right){
-
+		else{
+			if(n.right)
+				return this.searchNode(n.right, value);
+			else
+				return null;
 		}
 	},
-	searchNode: function(value){
-		var search = function(n){
-			if(n.value === value)
-				return n;
-			else if(value < n.value){
-				if(n.left)
-					return search(n.left);
-				else
-					return null;
-			}
-			else{
-				if(n.right)
-					return search(n.right);
-				else
-					return null;
-			}
-		};
-		return search(this.root);
+	searchNode: function(value, n){
+		if(!n){
+			n = this.root;
+		}
+		if(n.value === value)
+			return n;
+		else if(value < n.value){
+			if(n.left)
+				return this.searchNode(, n.left);
+			else
+				return null;
+		}
+		else{
+			if(n.right)
+				return this.searchNode(value, n.right);
+			else
+				return null;
+		}
 	},
-	getPaths : function(){
+	getPaths1 : function(){
 		var pathsArr = [];
-		var paths = function(n,path){
+		var paths = function(n, path){
 			if(!n) return;
 			path = path ? path : "";
 			if(path.length)
@@ -138,6 +149,29 @@ Tree.prototype = {
 			}
 		};
 		paths(this.root);
+		return pathsArr;
+	},
+	getPaths : function(n, path, pathsArr){
+		if(!n){
+			n = this.root;
+		}
+		if(!pathsArr){
+			pathsArr = [];	
+		}
+		path = path ? path : "";
+		if(path.length)
+			path += "->"+n.value;
+		else
+			path = ""+n.value;
+		if(!n.left && !n.right){
+			pathsArr.push(path);
+		}
+		else{
+			if(n.left)
+				this.getPaths(n.left, path, pathsArr);
+			if(n.right)
+				this.getPaths(n.right, path, pathsArr);	
+		}
 		return pathsArr;
 	},
 	validate: function(){
@@ -167,4 +201,4 @@ tree.fill(arr);
 //tree.leafs();
 //tree.preOrder();
 //tree.postOrder();
-console.log(tree.validate());
+console.log(tree.getPaths1());
