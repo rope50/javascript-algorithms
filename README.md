@@ -1,2 +1,2 @@
 # javascript-algorithms
-Algorithms Exercises for Javascript.
+Data structures and algorithms exercises for Javascript.
